@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DocumentToTimePerUrlTest {
     @Test
-    void convert() {
+    public void convert() {
         DocumentToTimePerUrl target = new DocumentToTimePerUrl();
         assertThrows(InvalidParameterException.class, () -> target.convert(new Document()));
     }

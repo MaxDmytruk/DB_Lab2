@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalendarToTimestampTest {
     @Test
-    void convert() {
+    public void convert() {
         CalendarToTimestamp converter = new CalendarToTimestamp();
         Calendar test = Calendar.getInstance();
         test.set(1970, Calendar.JANUARY, 1, 0, 0, 1);

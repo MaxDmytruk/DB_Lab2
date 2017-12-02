@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DocumentToUrlCountTest {
     @Test
-    void convert() {
+    public void convert() {
         DocumentToUrlCount target = new DocumentToUrlCount();
         assertThrows(InvalidParameterException.class, () -> target.convert(new Document()));
     }

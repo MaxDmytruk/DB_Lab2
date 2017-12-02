@@ -2,20 +2,19 @@ package services;
 
 import models.ServerLog;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CsvToLogService {
-    public ServerLog convert(String csv) throws IndexOutOfBoundsException{
+    public ServerLog convert(String stringToConvert) throws IndexOutOfBoundsException{
         Map<String, String> fieldResultDictionary = new HashMap<>();
-        int beginCut = csv.indexOf('{') + 1;
-        int finishCut = csv.lastIndexOf('}');
-        csv = csv.substring(beginCut, finishCut);
-        beginCut = csv.indexOf('{') + 1;
-        finishCut = csv.lastIndexOf('}');
-        csv = csv.substring(beginCut, finishCut);
-        String[] fields = csv.split(",");
+        int beginCut = stringToConvert.indexOf('{') + 1;
+        int finishCut = stringToConvert.lastIndexOf('}');
+        stringToConvert = stringToConvert.substring(beginCut, finishCut);
+        beginCut = stringToConvert.indexOf('{') + 1;
+        finishCut = stringToConvert.lastIndexOf('}');
+        stringToConvert = stringToConvert.substring(beginCut, finishCut);
+        String[] fields = stringToConvert.split(",");
 
         for (String fieldResultPair : fields) {
             String[] field = fieldResultPair.split("=");

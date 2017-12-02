@@ -19,9 +19,9 @@ import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
 
 public class ServerLogRepository {
-    MongoClient client;
-    MongoDatabase database;
-    MongoCollection logsCollection;
+    private MongoClient client;
+    private MongoDatabase database;
+    private MongoCollection logsCollection;
 
     public void connect(){
         client = new MongoClient();

@@ -10,7 +10,7 @@ import java.util.Calendar;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServerLogRepositoryTest {
-    static ServerLogRepository target;
+    private static ServerLogRepository target;
 
     @BeforeAll
     static void init(){
@@ -32,9 +32,6 @@ class ServerLogRepositoryTest {
     @Test
     void getAllServerLog(){
         int exceptionCount = 0;
-
-        ServerLog testLog = new ServerLog();
-
         try {
             target.getAllServerLogs();
         }
