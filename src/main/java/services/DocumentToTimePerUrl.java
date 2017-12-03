@@ -8,10 +8,10 @@ import java.util.HashMap;
 public class DocumentToTimePerUrl {
     public HashMap<String, String> convert(Document document){
         if(document == null){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Document is null or empty");
         }
         if(!document.containsKey("url")){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Document is null or empty");
         }
         HashMap<String, String> result = new HashMap<>();
         int startIndex;

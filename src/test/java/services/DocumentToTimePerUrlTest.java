@@ -1,17 +1,20 @@
 package services;
 
 import org.bson.Document;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import java.security.InvalidParameterException;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class DocumentToTimePerUrlTest {
+public class DocumentToTimePerUrlTest {
     @Test
     public void convert() {
         DocumentToTimePerUrl target = new DocumentToTimePerUrl();
-        assertThrows(InvalidParameterException.class, () -> target.convert(new Document()));
+        try{
+            target.convert(new Document());
+        }
+        catch (Exception e){
+            assertEquals("Document is null or empty", e.getMessage());
+        }
     }
 
 }

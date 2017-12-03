@@ -1,13 +1,13 @@
 package services;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class CalendarToTimestampTest {
+public class CalendarToTimestampTest {
     @Test
     public void convert() {
         CalendarToTimestamp converter = new CalendarToTimestamp();
@@ -15,5 +15,4 @@ class CalendarToTimestampTest {
         test.set(1970, Calendar.JANUARY, 1, 0, 0, 1);
         assertEquals(new Timestamp(test.getTimeInMillis()), converter.convert(test));
     }
-
 }

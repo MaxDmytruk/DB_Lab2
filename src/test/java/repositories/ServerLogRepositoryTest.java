@@ -1,24 +1,24 @@
 package repositories;
 
 import models.ServerLog;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class ServerLogRepositoryTest {
+public class ServerLogRepositoryTest {
     private static ServerLogRepository target;
 
-    @BeforeAll
-    static void init(){
+    @BeforeClass
+    public static void init(){
         target = new ServerLogRepository();
     }
 
     @Test
-    void connect() {
+    public void connect() {
         int exceptionCount = 0;
         try{
             target.connect();
@@ -30,7 +30,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void getAllServerLog(){
+    public void getAllServerLog(){
         int exceptionCount = 0;
         try {
             target.getAllServerLogs();
@@ -42,7 +42,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void insertServerLog() {
+    public void insertServerLog() {
         int exceptionCount = 0;
 
         ServerLog testLog = new ServerLog();
@@ -63,7 +63,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void updateServerLog() {
+    public void updateServerLog() {
         int exceptionCount = 0;
 
         ServerLog testLog = new ServerLog();
@@ -86,7 +86,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void deleteServerLog() {
+    public void deleteServerLog() {
         int exceptionCount = 0;
         try {
             ServerLog testLog = new ServerLog();
@@ -104,7 +104,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void getIpsByUrl() {int exceptionCount = 0;
+    public void getIpsByUrl() {int exceptionCount = 0;
         try {
             target.getIpsByUrl("test");
         }
@@ -115,7 +115,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void getUrlsByPeriod() {
+    public void getUrlsByPeriod() {
         int exceptionCount = 0;
         try {
             Calendar startDate = Calendar.getInstance();
@@ -133,7 +133,7 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void getUrlsByIp() {
+    public void getUrlsByIp() {
         int exceptionCount = 0;
         try {
             target.getUrlsByIp("2.2.2");
@@ -145,31 +145,31 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void getUrlSumTimeSpent() {
+    public void getUrlSumTimeSpent() {
         int exceptionCount = 0;
         try {
             target.getUrlSumTimeSpent();
         }
         catch (Exception ex) {
-            exceptionCount++;
+            assertEquals("Document is null or empty", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
 
     @Test
-    void getUrlCount() {
+    public void getUrlCount() {
         int exceptionCount = 0;
         try {
             target.getUrlCount();
         }
         catch (Exception ex) {
-            exceptionCount++;
+            assertEquals("Document is null or empty", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
 
     @Test
-    void getUrlCountInPeriod() {
+    public void getUrlCountInPeriod() {
         int exceptionCount = 0;
         try {
             Calendar startDate = Calendar.getInstance();
@@ -187,13 +187,13 @@ class ServerLogRepositoryTest {
     }
 
     @Test
-    void getIpTimeSpent() {
+    public void getIpTimeSpent() {
         int exceptionCount = 0;
         try {
             target.getIpTimeSpent();
         }
         catch (Exception ex) {
-            exceptionCount++;
+            assertEquals("Document is null or empty", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }

@@ -9,10 +9,10 @@ import java.util.Map;
 public class DocumentToIpCount {
     public Map<String, String> convert(Document document) throws InvalidParameterException{
         if(document == null){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Document is null or empty");
         }
         if(!document.containsKey("url")){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Document is null or empty");
         }
         Map<String,String> resultSet = new HashMap<>();
         int startIndex;

@@ -9,10 +9,10 @@ import java.util.Map;
 public class DocumentToUrlCount {
     public Map<String, Integer> convert(Document document){
         if(document == null){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Document is null or empty");
         }
         if(!document.containsKey("url")){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Document is null or empty");
         }
         Map<String,Integer> resultSet = new HashMap<>();
         int startIndex;

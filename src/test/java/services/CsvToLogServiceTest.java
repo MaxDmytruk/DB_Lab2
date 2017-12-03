@@ -1,11 +1,12 @@
 package services;
 
 import models.ServerLog;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
- class CsvToLogServiceTest {
+public class CsvToLogServiceTest {
+
     @Test
     public void convert() {
         CsvToLogService converter = new CsvToLogService();
@@ -15,5 +16,4 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals("1.1.1", result.getIp());
         assertEquals(111, result.getTimeSpent());
     }
-
 }
