@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.*;
 
@@ -82,11 +81,11 @@ public class ServerLogRepositoryTest {
 
         try {
             target.updateServerLog(testLog, newLog);
+            target.deleteServerLog(testLog);
         }
         catch (MongoTimeoutException ex) {
             assertEquals("start your server", ex.getMessage());
         }
-        target.deleteServerLog(testLog);
         assertEquals(0, exceptionCount);
     }
 
