@@ -25,6 +25,9 @@ public class ServerLogRepositoryTest {
         try{
             target.connect();
         }
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
+        }
         catch (Exception e){
             exceptionCount ++;
         }
