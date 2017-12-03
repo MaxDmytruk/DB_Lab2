@@ -1,17 +1,19 @@
 package repositories;
 
-import com.mongodb.MongoClient;
+import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import models.ServerLog;
 import org.bson.Document;
 import services.*;
 
+import java.net.ConnectException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Projections.excludeId;
@@ -23,24 +25,41 @@ public class ServerLogRepository {
     private MongoDatabase database;
     private MongoCollection logsCollection;
 
-    public void connect(){
-        client = new MongoClient();
+    public void connect() throws MongoTimeoutException {
+        MongoClientOptions mongoBuilder = new MongoClientOptions.Builder().connectTimeout(1000).build();
+        client = new MongoClient("localhost", mongoBuilder);
+        try{
+            client.getAddress();
+        }
+        catch (Exception e){
+            client.close();
+            throw new MongoTimeoutException("start your server");
+        }
         database = client.getDatabase("DB_Lab_2");
         logsCollection = database.getCollection("Server-Logs");
     }
 
     public void insertServerLog(ServerLog log){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         Document doc = new Document("url", log.getUrl())
                 .append("ip", log.getIp())
                 .append("timestamp", log.getTimestamp())
                 .append("time_spent", log.getTimeSpent());
         logsCollection.insertOne(doc);
+        System.out.println("open ex");
         client.close();
     }
 
     public void updateServerLog(ServerLog log, ServerLog newLog){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
 
         Document docToUpdate = new Document("url", log.getUrl())
                 .append("ip", log.getIp())
@@ -56,7 +75,11 @@ public class ServerLogRepository {
     }
 
     public void deleteServerLog(ServerLog logToDelete){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         Document document = new Document("url", logToDelete.getUrl())
                 .append("ip", logToDelete.getIp())
                 .append("timestamp", logToDelete.getTimestamp())
@@ -67,7 +90,11 @@ public class ServerLogRepository {
     }
 
     public ArrayList<ServerLog> getAllServerLogs(){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         ArrayList<ServerLog> logs = new ArrayList<>();
         CsvToLogService convertService = new CsvToLogService();
 
@@ -81,7 +108,11 @@ public class ServerLogRepository {
     }
 
     public ArrayList<String> getIpsByUrl(String url){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         ArrayList<String> ips = new ArrayList<>();
         for(Object ipObject : logsCollection.find(eq("url", url)).projection(fields(include("ip"), excludeId()))){
             Document doc = (Document)ipObject;
@@ -96,7 +127,11 @@ public class ServerLogRepository {
         Timestamp startTimestamp = timestampConverter.convert(start);
         Timestamp endTimestamp = timestampConverter.convert(end);
 
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
 
         for(Object urlObject : logsCollection.find(and(gte("timestamp", startTimestamp), lte("timestamp", endTimestamp))).projection(fields(include("url"), excludeId()))){
             Document document = (Document)urlObject;
@@ -107,7 +142,11 @@ public class ServerLogRepository {
     }
 
     public ArrayList<String> getUrlsByIp(String ip){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         ArrayList<String> urls = new ArrayList<>();
         for (Object urlObject : logsCollection.find(eq("ip", ip)).projection(fields(include("url"), excludeId()))){
             Document urlDocument = (Document)urlObject;
@@ -118,7 +157,11 @@ public class ServerLogRepository {
     }
 
     public Map<String, String> getUrlSumTimeSpent(){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         DocumentToTimePerUrl converter = new DocumentToTimePerUrl();
         Map<String, String> urlTimeSpent = new HashMap<>();
         String mapFunction = "function (){emit(this.url, this.time_spent);}";
@@ -136,7 +179,11 @@ public class ServerLogRepository {
     }
 
     public Map<String, Integer> getUrlCount(){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         DocumentToUrlCount converter = new DocumentToUrlCount();
         Map<String, Integer> resultSet = new HashMap<>();
         String mapFunction = "function (){emit(this.url, 1);}";
@@ -155,7 +202,11 @@ public class ServerLogRepository {
     }
 
     public Map<String,Integer> getUrlCountInPeriod(Calendar start, Calendar end){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         CalendarToTimestamp dateConverter = new CalendarToTimestamp();
         Timestamp startDate = dateConverter.convert(start);
         Timestamp endDate = dateConverter.convert(end);
@@ -180,7 +231,11 @@ public class ServerLogRepository {
     }
 
     public Map<String, String> getIpTimeSpent(){
-        connect();
+        try {
+            connect();
+        } catch (MongoTimeoutException e) {
+            throw new MongoTimeoutException("start your server");
+        }
         DocumentToIpCount converter = new DocumentToIpCount();
 
         Map<String, String> resultSet = new HashMap<>();

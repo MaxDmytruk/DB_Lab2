@@ -1,11 +1,13 @@
 package repositories;
 
+import com.mongodb.MongoTimeoutException;
 import models.ServerLog;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.*;
 
@@ -35,8 +37,8 @@ public class ServerLogRepositoryTest {
         try {
             target.getAllServerLogs();
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
@@ -54,11 +56,11 @@ public class ServerLogRepositoryTest {
 
         try {
             target.insertServerLog(testLog);
+            target.deleteServerLog(testLog);
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
-        target.deleteServerLog(testLog);
         assertEquals(0, exceptionCount);
     }
 
@@ -78,8 +80,8 @@ public class ServerLogRepositoryTest {
         try {
             target.updateServerLog(testLog, newLog);
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         target.deleteServerLog(testLog);
         assertEquals(0, exceptionCount);
@@ -97,8 +99,8 @@ public class ServerLogRepositoryTest {
             testLog.setTimestamp(new Timestamp(startDate.getTimeInMillis()));
             target.deleteServerLog(testLog);
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
@@ -108,8 +110,8 @@ public class ServerLogRepositoryTest {
         try {
             target.getIpsByUrl("test");
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
@@ -126,8 +128,8 @@ public class ServerLogRepositoryTest {
 
             target.getUrlsByPeriod(startDate, endDate);
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
@@ -138,8 +140,8 @@ public class ServerLogRepositoryTest {
         try {
             target.getUrlsByIp("2.2.2");
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
@@ -149,6 +151,9 @@ public class ServerLogRepositoryTest {
         int exceptionCount = 0;
         try {
             target.getUrlSumTimeSpent();
+        }
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         catch (Exception ex) {
             assertEquals("Document is null or empty", ex.getMessage());
@@ -161,6 +166,9 @@ public class ServerLogRepositoryTest {
         int exceptionCount = 0;
         try {
             target.getUrlCount();
+        }
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         catch (Exception ex) {
             assertEquals("Document is null or empty", ex.getMessage());
@@ -180,8 +188,8 @@ public class ServerLogRepositoryTest {
 
             target.getUrlCountInPeriod(startDate, endDate);
         }
-        catch (Exception ex) {
-            exceptionCount++;
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         assertEquals(0, exceptionCount);
     }
@@ -191,6 +199,9 @@ public class ServerLogRepositoryTest {
         int exceptionCount = 0;
         try {
             target.getIpTimeSpent();
+        }
+        catch (MongoTimeoutException ex) {
+            assertEquals("start your server", ex.getMessage());
         }
         catch (Exception ex) {
             assertEquals("Document is null or empty", ex.getMessage());
